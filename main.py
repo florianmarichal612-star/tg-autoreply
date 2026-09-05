@@ -55,7 +55,9 @@ logging.basicConfig(
 log = logging.getLogger("tg-autoreply")
 
 # --- Клиенты ---
-client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+from telethon.sessions import StringSession
+_s = os.environ.get("TG_SESSION_STRING", "").strip()
+client = TelegramClient(StringSession(_s) if _s else SESSION_NAME, API_ID, API_HASH)
 claude = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
 
 # --- Runtime state ---
